@@ -1,0 +1,13 @@
+@media screen and (max-width: 1366px) {
+  .big-box2{padding: 0 !important; right: 20px !important;}
+
+}
+
+@media screen and (max-width: 1280px) {
+  .big-box2{padding: 0 !important; right: 20px !important; }
+  /*.el-table__body-wrapper{overflow-y: auto}*/
+.route-data-pag{
+  position: absolute;bottom: 25px;
+}
+}
+

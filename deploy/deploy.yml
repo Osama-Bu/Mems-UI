@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mems-ui
+  name: mems-ui
+  namespace: mems-sinan
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mems-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mems-ui
+    spec:
+      imagePullSecrets:
+        - name: harbor-registry  #提前在项目下配置访问阿里云的账号密码
+      containers:
+        - image: $REGISTRY/$DOCKERHUB_NAMESPACE/mems-ui:SNAPSHOT-$BUILD_NUMBER
+          imagePullPolicy: Always
+          name: app
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mems-ui
+  name: mems-ui
+  namespace: mems-sinan
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: mems-ui
+  sessionAffinity: None
+  type: ClusterIP
