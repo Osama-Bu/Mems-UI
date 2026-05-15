@@ -51,7 +51,7 @@ pipeline {
   environment {
     DOCKER_CREDENTIAL_ID = 'docker-registry-credential'
     KUBECONFIG_CREDENTIAL_ID = 'jenkins-kubeconfig-credential'
-    REGISTRY = '76.13.177.97:8085'
+    REGISTRY = '187.127.112.240:8085'
     DOCKERHUB_NAMESPACE = 'mems'
   }
   parameters {
